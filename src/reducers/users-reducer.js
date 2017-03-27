@@ -3,7 +3,8 @@ import {
   GET_USER,
   CREATE_USER,
   EDIT_USER,
-  UPDATE_USER
+  UPDATE_USER,
+  DELETE_USER
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -35,6 +36,16 @@ export const usersReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         all: [ ...state.all.slice(0, index), action.payload.data , ...state.all.slice(index + 1) ],
+        error: ''
+      };
+    case DELETE_USER:
+      if (action.error) {
+        return { ...state, error: 'Unable to delete user' };
+      }
+      const indexToDelete = state.all.findIndex((user) => user._id === action.payload.data._id );
+      return {
+        ...state,
+        all: [ ...state.all.slice(0, indexToDelete), ...state.all.slice(indexToDelete + 1) ],
         error: ''
       };
     default:

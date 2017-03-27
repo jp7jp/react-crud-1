@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getUsers } from '../actions';
+import { getUsers, deleteUser } from '../actions';
 
 class Users extends Component {
 
@@ -9,12 +9,16 @@ class Users extends Component {
     this.props.getUsers();
   }
 
+  handleRemoveClick(user) {
+    this.props.deleteUser(user);
+  }
+
   renderRow(user) {
     return (
       <tr key={user._id}>
         <td><Link to={`/users/${user._id}`}>Show</Link></td>
         <td><Link to={`/users/${user._id}/edit`}>Edit</Link></td>
-        <td><Link to={`/users/${user._id}/delete`}>Delete</Link></td>
+        <td><span onClick={() => this.handleRemoveClick(user._id)}>Delete</span></td>
         <td>{user.email}</td>
       </tr>
     )
@@ -48,4 +52,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { getUsers })(Users);
+export default connect(mapStateToProps, { getUsers, deleteUser })(Users);

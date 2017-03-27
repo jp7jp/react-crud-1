@@ -5,6 +5,7 @@ export const GET_USER = 'GET_USER';
 export const CREATE_USER = 'CREATE_USER';
 export const EDIT_USER = 'EDIT_USER';
 export const UPDATE_USER = 'UPDATE_USER';
+export const DELETE_USER = 'DELETE_USER';
 
 export const getUsers = () => {
   const request = axios.get('http://localhost:3001/users');
@@ -47,6 +48,15 @@ export const updateUser = (id, user) => {
 
   return {
     type: UPDATE_USER,
+    payload: request
+  }
+}
+
+export const deleteUser = (id) => {
+  const request = axios.delete(`http://localhost:3001/users/${id}`);
+
+  return {
+    type: DELETE_USER,
     payload: request
   }
 }
