@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import Users from './components/users';
 import User from './components/user';
+import UserForm from './components/user-form';
 import './App.css';
 
 class App extends Component {
@@ -14,6 +15,7 @@ class App extends Component {
         <Link to="/users" className="link-menu">Users</Link>
         <Route path="/users" component={Users} />
         <Route path="/users/:id" component={User} />
+        <UserForm />
       </div>
     );
   }
