@@ -5,18 +5,18 @@ import { getUser } from '../actions';
 class User extends Component {
 
   componentWillMount() {
-    console.log('componentWillMount', this.props.match.params.id);
     this.props.getUser(this.props.match.params.id);
   }
 
   render() {
-    console.log(this.props.match.params.id);
-    console.log('RENDER', this.props.users.user);
     if(!this.props.users.user) {
+      return <div>Loading...</div>
+    } else if (this.props.users.user._id !== this.props.match.params.id) {
+      this.componentWillMount();
       return <div>Loading...</div>
     }
     return (
-      <dl>
+      <dl key={this.props.match.params.id}>
         <dt>Email:</dt>
         <dd>{ this.props.users.user.email }</dd>
         <dt>Password:</dt>

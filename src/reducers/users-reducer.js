@@ -10,7 +10,6 @@ export const usersReducer = (state = INITIAL_STATE, action) => {
     case GET_USERS:
       return { ...state, all: action.payload.data };
     case GET_USER:
-      console.log('GET_USER', action.payload.data);
       return { ...state, user: action.payload.data };
     default:
       return state;
