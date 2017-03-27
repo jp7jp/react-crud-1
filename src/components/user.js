@@ -4,15 +4,14 @@ import { getUser } from '../actions';
 
 class User extends Component {
 
-  componentWillMount() {
-    this.props.getUser(this.props.match.params.id);
+  componentWillUpdate(nextProps) {
+    if (!this.props.users.user || (this.props.users.user._id !== nextProps.match.params.id)) {
+      this.props.getUser(this.props.match.params.id);
+    }
   }
 
   render() {
     if(!this.props.users.user) {
-      return <div>Loading...</div>
-    } else if (this.props.users.user._id !== this.props.match.params.id) {
-      this.componentWillMount();
       return <div>Loading...</div>
     }
     return (
