@@ -1,21 +1,28 @@
 import React, { Component } from 'react';
-import { createUser } from '../actions';
+import { editUser, updateUser } from '../actions';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
-class UserForm extends Component {
+class UserEdit extends Component {
+
+  componentWillUpdate(nextProps) {
+    if (!this.props.editedUser || (this.props.editedUser._id !== nextProps.match.params.id)) {
+      this.props.editUser(nextProps.match.params.id).then((user) => {
+        this.props.initialize(this.props.editedUser);
+      });
+    }
+  }
 
   handleOnSubmit(values) {
-    this.props.createUser(values);
-    this.props.reset();
+    this.props.updateUser(this.props.editedUser._id, values);
+    //this.props.reset();
   }
 
   render() {
     const { handleSubmit, pristine, submitting } = this.props;
-
     return (
       <div className="component">
-        <h3>New User</h3>
+        <h3>Edit User</h3>
         <form onSubmit={handleSubmit(this.handleOnSubmit.bind(this))}>
           Error: {this.props.userError || 'No errors'}<br />
           E-Mail: <Field name="email" component="input" type="text" /><br />
@@ -29,11 +36,11 @@ class UserForm extends Component {
 
 function mapStateToProps(state) {
   return {
-    newUser: state.users.newUser,
+    editedUser: state.users.editedUser,
     userError: state.users.error
   }
 }
 
-export default connect(mapStateToProps, { createUser })(reduxForm({
-  form: 'createUser'
-})(UserForm));
+export default connect(mapStateToProps, { editUser, updateUser })(reduxForm({
+  form: 'editUserForm'
+})(UserEdit));

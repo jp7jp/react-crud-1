@@ -37,3 +37,19 @@ th, td {
   background: blue;
   padding: 5px 15px;
 }
+
+.component {
+  border: 1px solid #ccc;
+  background: #eee;
+  padding: 10px;
+  margin: 10px;
+}
+
+.row {
+  clear: both;
+}
+
+.col {
+  width: 33%;
+  float: left;
+}
