@@ -5,12 +5,20 @@ import { Field, reduxForm } from 'redux-form';
 
 class UserEdit extends Component {
 
-  componentWillUpdate(nextProps) {
-    if (!this.props.editedUser || (this.props.editedUser._id !== nextProps.match.params.id)) {
-      this.props.editUser(nextProps.match.params.id).then((user) => {
+  updateUser(userId) {
+    if (!this.props.editedUser || (this.props.editedUser._id !== userId)) {
+      this.props.editUser(userId).then((user) => {
         this.props.initialize(this.props.editedUser);
       });
     }
+  }
+
+  componentWillUpdate(nextProps) {
+    this.updateUser(nextProps.match.params.id);
+  }
+
+  componentWillMount() {
+    this.updateUser(this.props.match.params.id);
   }
 
   handleOnSubmit(values) {
